@@ -2,8 +2,9 @@ import { completeAppointmentType } from "@/types/doctor";
 import { checkInPatientType } from "@/types/receptionist";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
+import { apiUrl } from "@/lib/apiBaseUrl";
 
-const SERVER_URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/receptionist`
+const SERVER_URL = apiUrl("/api/receptionist")
 
 export const checkInPatient = createAsyncThunk(
     "receptionist/checkIn",

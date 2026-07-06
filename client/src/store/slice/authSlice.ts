@@ -1,8 +1,9 @@
 import { emailType, loginType, otpType, registrationType, resendOtpType, userType } from "@/types/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
+import { apiUrl } from "@/lib/apiBaseUrl";
 
-const SERVER_URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth`
+const SERVER_URL = apiUrl("/api/auth")
 
 export const registration = createAsyncThunk(
     "auth/regi",

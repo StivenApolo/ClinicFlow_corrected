@@ -27,9 +27,10 @@ services:
     depends_on:
       - server
     environment:
+      - NEXT_PUBLIC_SERVER_URL=http://localhost:5000
+      - REVALIDATE_SECRET=clinicflow-demo-revalidate
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
-      - NODE_ENV=development
     volumes:
       - ./client:/client
       - /client/node_modules

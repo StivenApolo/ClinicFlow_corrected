@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useEffect } from 'react';
-import { ArrowRight, Plus, Activity, ShieldPlus, Zap } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ArrowRight, Activity } from 'lucide-react';
 import Link from 'next/link';
 import DepartmentCard from './DepartmentCard';
 import AddDepartmentModal from './AddDepartmentModal';
@@ -9,10 +9,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
 import { getDepartments } from '@/store/slice/adminSlice';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 const DepartmentsDesign = ({ admin }: { admin: boolean }) => {
     const dispatch = useDispatch<AppDispatch>()
+    const router = useRouter()
     const { departments } = useSelector((state: RootState) => state.admin)
+    const [isRetrying, setIsRetrying] = useState(false)
+
     useEffect(() => {
         const fetchDepartment = async () => {
             try {
@@ -24,7 +28,19 @@ const DepartmentsDesign = ({ admin }: { admin: boolean }) => {
         if (departments.length === 0) {
             fetchDepartment()
         }
-    }, [])
+    }, [dispatch, departments.length])
+
+    const handleRetry = async () => {
+        try {
+            setIsRetrying(true)
+            await dispatch(getDepartments(null)).unwrap()
+            toast.success("Departments refreshed")
+        } catch (error: any) {
+            toast.error(error.message || "Unable to refresh departments")
+        } finally {
+            setIsRetrying(false)
+        }
+    }
 
     return (
         <div className="min-h-screen bg-[#FDFDFD]">
@@ -82,8 +98,32 @@ const DepartmentsDesign = ({ admin }: { admin: boolean }) => {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-24 bg-white rounded-[3rem] border-2 border-dashed border-slate-100 shadow-sm">
-                            <p className="text-slate-400 font-bold text-lg">No departments found in the directory.</p>
+                        <div className="text-center py-24 bg-white rounded-[3rem] border-2 border-dashed border-slate-100 shadow-sm px-6">
+                            <h3 className="text-2xl font-black text-slate-900 mb-3">No departments available yet</h3>
+                            <p className="text-slate-500 font-medium max-w-xl mx-auto leading-relaxed mb-8">
+                                The directory is empty for now. If this is a demo environment, refresh the data seed or return home to explore the rest of the clinic flow.
+                            </p>
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                                <button
+                                    onClick={handleRetry}
+                                    disabled={isRetrying}
+                                    className="px-6 py-3 rounded-2xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                                >
+                                    {isRetrying ? "Refreshing..." : "Refresh departments"}
+                                </button>
+                                <Link
+                                    href="/"
+                                    className="px-6 py-3 rounded-2xl bg-slate-100 text-slate-700 font-bold hover:bg-slate-200 transition-all"
+                                >
+                                    Back to home
+                                </Link>
+                                <button
+                                    onClick={() => router.refresh()}
+                                    className="px-6 py-3 rounded-2xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 transition-all"
+                                >
+                                    Reload page
+                                </button>
+                            </div>
                         </div>
                     )}
                 </div>

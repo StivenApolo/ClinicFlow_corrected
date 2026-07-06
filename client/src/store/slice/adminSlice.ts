@@ -5,8 +5,9 @@ import {
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
+import { apiUrl } from "@/lib/apiBaseUrl";
 
-const SERVER_URL = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/admin`
+const SERVER_URL = apiUrl("/api/admin")
 
 export const addReceptionist = createAsyncThunk(
     "admin/addreceptionist",
@@ -117,7 +118,7 @@ export const getDepartments = createAsyncThunk(
     "admin/getDepartment",
     async (_: null, { rejectWithValue }) => {
         try {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/allDepartment`)
+            const res = await axios.get(apiUrl("/api/user/allDepartment"))
             return res.data
         } catch (error) {
             const err = error as AxiosError<any>
@@ -173,7 +174,7 @@ export const editDoctor = createAsyncThunk(
 
 export const deleteDoctor = createAsyncThunk(
     "admin/deleteDoctor",
-    async ({ doctorId }: { doctorId: string }, { rejectWithValue }) => {
+    async (doctorId: string, { rejectWithValue }) => {
         try {
             const res = await axios.delete(`${SERVER_URL}/delete-doctor/${doctorId}`,
                 { withCredentials: true }
@@ -350,7 +351,7 @@ const adminSlice = createSlice({
                 const doctorId = action.payload.data._id
                 const idx = state.allDoctor.findIndex((doctor: any) => doctor._id === doctorId)
                 if (idx > -1) {
-                    state.allDoctor[0] = action.payload.data
+                    state.allDoctor[idx] = action.payload.data
                 }
             })
     }
