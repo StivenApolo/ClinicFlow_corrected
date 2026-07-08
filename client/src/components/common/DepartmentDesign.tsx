@@ -144,9 +144,12 @@ const DepartmentsDesign = ({ admin }: { admin: boolean }) => {
                                     Our health coordinators are ready to assist you in finding the most suitable department for your diagnosis.
                                 </p>
                             </div>
-                            <Link href="/contact" className="inline-flex items-center gap-3 px-10 py-5 bg-blue-600 text-white font-black rounded-[2rem] hover:bg-blue-700 hover:scale-105 transition-all shadow-xl shadow-blue-900/20 whitespace-nowrap">
+                            <a
+                                href="mailto:contact@clinicflow.com?subject=ClinicFlow%20Support"
+                                className="inline-flex items-center gap-3 px-10 py-5 bg-blue-600 text-white font-black rounded-[2rem] hover:bg-blue-700 hover:scale-105 transition-all shadow-xl shadow-blue-900/20 whitespace-nowrap"
+                            >
                                 Get In Touch <ArrowRight size={20} />
-                            </Link>
+                            </a>
                         </div>
                     </div>
                 </div>

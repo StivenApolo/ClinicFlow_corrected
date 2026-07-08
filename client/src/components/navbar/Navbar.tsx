@@ -218,8 +218,8 @@ const Navbar = () => {
 
             {user && user.role === 'admin' && (
               <>
-                <Link href="/admin/department" onClick={() => setIsOpen(false)} className="text-lg font-bold text-slate-700 flex items-center justify-between border-b border-slate-50 pb-2">
-                  Department <ChevronRight size={18} />
+                <Link href="/admin/departments" onClick={() => setIsOpen(false)} className="text-lg font-bold text-slate-700 flex items-center justify-between border-b border-slate-50 pb-2">
+                  Departments <ChevronRight size={18} />
                 </Link>
                 <Link href="/admin/doctors" onClick={() => setIsOpen(false)} className="text-lg font-bold text-slate-700 flex items-center justify-between border-b border-slate-50 pb-2">
                   Doctors <ChevronRight size={18} />

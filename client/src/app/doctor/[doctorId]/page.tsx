@@ -49,9 +49,11 @@ const DoctorProfilePage = () => {
   const handleAppointmentClick = async (doctorId: string) => {
     if (!user) {
       router.push('/login')
+      return
     } else {
       if (user.role !== 'patient') {
         router.push('/')
+        return
       }
       try {
         await dispatch(appointment({ doctorId })).unwrap()
@@ -231,9 +233,12 @@ const DoctorProfilePage = () => {
                   If you face any issues while booking an appointment or need urgent assistance, please contact our support desk available 24/7.
                 </p>
               </div>
-              <button className="relative z-1 whitespace-nowrap bg-white text-indigo-900 px-6 py-3 rounded-xl font-bold hover:bg-indigo-50 transition-colors">
+              <a
+                href="mailto:contact@clinicflow.com?subject=ClinicFlow%20Support"
+                className="relative z-1 whitespace-nowrap bg-white text-indigo-900 px-6 py-3 rounded-xl font-bold hover:bg-indigo-50 transition-colors"
+              >
                 Contact Support
-              </button>
+              </a>
               {/* Decorative Circle */}
               <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-indigo-800 rounded-full opacity-50"></div>
             </div>

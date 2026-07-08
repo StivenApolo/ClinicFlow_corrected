@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const HeroSection = () => {
   return (
@@ -23,12 +24,18 @@ const HeroSection = () => {
             </p>
 
             <div className="flex flex-wrap gap-5 justify-center lg:justify-start pt-4">
-              <button className="px-10 py-5 bg-blue-600 text-white font-bold rounded-2xl shadow-xl shadow-blue-500/30 hover:bg-blue-700 transition-all active:scale-95">
+              <Link
+                href="/departments"
+                className="px-10 py-5 bg-blue-600 text-white font-bold rounded-2xl shadow-xl shadow-blue-500/30 hover:bg-blue-700 transition-all active:scale-95"
+              >
                 Book Appointment
-              </button>
-              <button className="px-10 py-5 bg-white text-slate-800 font-bold rounded-2xl border-2 border-slate-200 shadow-sm hover:bg-slate-50 transition-all active:scale-95">
+              </Link>
+              <Link
+                href="/departments"
+                className="px-10 py-5 bg-white text-slate-800 font-bold rounded-2xl border-2 border-slate-200 shadow-sm hover:bg-slate-50 transition-all active:scale-95"
+              >
                 View Doctors
-              </button>
+              </Link>
             </div>
 
             {/* Feature Highlights */}

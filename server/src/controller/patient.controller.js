@@ -158,7 +158,7 @@ export const addAppointment = AsyncHandler(async (req, res) => {
     }
 
     // Generate QR
-    const qrPayload = `${process.env.CORS_ORIGIN}/receptionist/check-in?appointmentId=${appointment._id}&hash=${qrHash}`;
+    const qrPayload = `${process.env.CORS_ORIGIN}/receptionist/scan?appointmentId=${appointment._id}&hash=${qrHash}`;
 
     const qrImage = await QRCode.toDataURL(qrPayload);
 
@@ -238,7 +238,7 @@ export const getAppointment = AsyncHandler(async (req, res) => {
         )
     }
 
-    const qrPayload = `${process.env.CORS_ORIGIN}/receptionist/check-in?appointmentId=${appointment._id}&hash=${appointment.qrHash}`;
+    const qrPayload = `${process.env.CORS_ORIGIN}/receptionist/scan?appointmentId=${appointment._id}&hash=${appointment.qrHash}`;
 
     const qrImage = await QRCode.toDataURL(qrPayload);
 

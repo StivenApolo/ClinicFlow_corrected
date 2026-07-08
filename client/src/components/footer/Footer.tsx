@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { 
   Mail, 
   Phone, 
@@ -30,13 +31,13 @@ const Footer = () => {
               Transforming healthcare with a digital-first approach. We eliminate long hospital queues through smart, real-time management systems.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+              <a href="https://github.com/StivenApolo/ClinicFlow_corrected" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all" aria-label="Project repository">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+              <Link href="/works" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all" aria-label="How it works">
                 <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+              </Link>
+              <a href="mailto:contact@clinicflow.com" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all" aria-label="Contact support">
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>
@@ -46,10 +47,10 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold mb-6 uppercase tracking-widest text-sm">Navigation</h4>
             <ul className="space-y-4 text-sm font-medium">
-              <li><a href="#" className="hover:text-blue-400 transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Find a Doctor</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Book Appointment</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Departments</a></li>
+              <li><Link href="/works" className="hover:text-blue-400 transition-colors">About Us</Link></li>
+              <li><Link href="/departments" className="hover:text-blue-400 transition-colors">Find a Doctor</Link></li>
+              <li><Link href="/departments" className="hover:text-blue-400 transition-colors">Book Appointment</Link></li>
+              <li><Link href="/departments" className="hover:text-blue-400 transition-colors">Departments</Link></li>
             </ul>
           </div>
 
@@ -57,10 +58,10 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold mb-6 uppercase tracking-widest text-sm">Support</h4>
             <ul className="space-y-4 text-sm font-medium">
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Cookie Policy</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Help Center</a></li>
+              <li><Link href="/works" className="hover:text-blue-400 transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/works" className="hover:text-blue-400 transition-colors">Terms of Service</Link></li>
+              <li><Link href="/works" className="hover:text-blue-400 transition-colors">Cookie Policy</Link></li>
+              <li><a href="mailto:contact@clinicflow.com" className="hover:text-blue-400 transition-colors">Help Center</a></li>
             </ul>
           </div>
 

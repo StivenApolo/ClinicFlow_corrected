@@ -97,7 +97,14 @@ const DepartmentDoctorsPage = () => {
                                 <User size={64} />
                             </div>
                             <h3 className="text-xl font-medium text-slate-600">No doctors available right now.</h3>
-                            <button onClick={() => router.back()} className="text-blue-600 underline mt-2">Go Back</button>
+                            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                                <button onClick={() => router.back()} className="text-blue-600 underline">
+                                    Go Back
+                                </button>
+                                <Link href="/departments" className="text-slate-500 underline">
+                                    Browse all departments
+                                </Link>
+                            </div>
                         </div>
                     )}
                 </div>

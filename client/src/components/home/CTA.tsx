@@ -1,5 +1,6 @@
 import React from 'react';
 import { CalendarDays, ArrowRight, Sparkles } from 'lucide-react';
+import Link from 'next/link';
 
 const CTA = () => {
   return (
@@ -30,15 +31,21 @@ const CTA = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5">
-              <button className="flex items-center justify-center gap-3 px-10 py-5 bg-blue-600 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/40 hover:bg-blue-700 hover:scale-105 transition-all duration-300">
+              <Link
+                href="/departments"
+                className="flex items-center justify-center gap-3 px-10 py-5 bg-blue-600 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/40 hover:bg-blue-700 hover:scale-105 transition-all duration-300"
+              >
                 <CalendarDays className="w-6 h-6" />
                 Book Appointment Now
-              </button>
+              </Link>
               
-              <button className="flex items-center justify-center gap-3 px-10 py-5 bg-white/5 text-white font-bold rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300">
+              <Link
+                href="/works"
+                className="flex items-center justify-center gap-3 px-10 py-5 bg-white/5 text-white font-bold rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+              >
                 Learn More
                 <ArrowRight className="w-5 h-5" />
-              </button>
+              </Link>
             </div>
 
             {/* Trust Indicators */}

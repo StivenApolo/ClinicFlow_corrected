@@ -117,7 +117,7 @@ const AppointmentHistoryPage = () => {
             <h3 className="text-lg font-semibold text-slate-900">No appointments found</h3>
             <p className="text-slate-500 mt-2">You haven't booked any appointments yet.</p>
             <Link
-              href="/doctors"
+              href="/departments"
               className="inline-block mt-6 px-6 py-2 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors"
             >
               Book Now
