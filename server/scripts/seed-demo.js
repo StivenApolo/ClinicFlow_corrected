@@ -9,7 +9,7 @@ import Appointments from "../src/models/Appointments.model.js";
 
 dotenv.config();
 
-const MONGODB_URL = process.env.MONGODB_URL || "mongodb://127.0.0.1:27018";
+const MONGODB_URL = process.env.MONGODB_URL || "mongodb://127.0.0.1:27017";
 const DB_NAME = "clinicFlow";
 const DEMO_PASSWORD = "Clinic1234";
 const passwordHash = await bcrypt.hash(DEMO_PASSWORD, 12);
@@ -118,14 +118,6 @@ const departments = [
   }
 ];
 
-const schedules = [
-  { dayOfWeek: "Mon", startTime: "09:00", endTime: "13:00" },
-  { dayOfWeek: "Tue", startTime: "09:00", endTime: "13:00" },
-  { dayOfWeek: "Wed", startTime: "09:00", endTime: "13:00" },
-  { dayOfWeek: "Thu", startTime: "09:00", endTime: "13:00" },
-  { dayOfWeek: "Fri", startTime: "09:00", endTime: "13:00" }
-];
-
 const doctorSchedules = [
   {
     fullName: "Dr. Sofia Rivera",
@@ -134,7 +126,13 @@ const doctorSchedules = [
     chamberNumber: "A-101",
     consultationFee: 40,
     slotDuration: 15,
-    schedule: schedules
+    schedule: [
+      { dayOfWeek: "Mon", startTime: "09:00", endTime: "13:00" },
+      { dayOfWeek: "Tue", startTime: "09:00", endTime: "13:00" },
+      { dayOfWeek: "Wed", startTime: "09:00", endTime: "13:00" },
+      { dayOfWeek: "Thu", startTime: "09:00", endTime: "13:00" },
+      { dayOfWeek: "Fri", startTime: "09:00", endTime: "13:00" }
+    ]
   },
   {
     fullName: "Dr. Mateo Alvarez",
@@ -168,13 +166,8 @@ async function upsertUser(user) {
 
 async function upsertDepartment(department) {
   return Departments.findOneAndUpdate(
-    { name: department.name.toLowerCase() },
-    {
-      $set: {
-        name: department.name,
-        description: department.description
-      }
-    },
+    { name: department.name },
+    { $set: department },
     {
       upsert: true,
       returnDocument: "after",
@@ -210,12 +203,11 @@ async function upsertAppointment(appointment) {
   return Appointments.findOneAndUpdate(
     {
       doctorId: appointment.doctorId,
+      patientId: appointment.patientId,
       date: appointment.date,
       slotStart: appointment.slotStart
     },
-    {
-      $set: appointment
-    },
+    { $set: appointment },
     {
       upsert: true,
       returnDocument: "after",
@@ -237,7 +229,7 @@ async function main() {
   const userDocs = new Map();
   for (const user of users) {
     const doc = await upsertUser(user);
-    userDocs.set(doc.email, doc);
+    userDocs.set(user.email, doc);
   }
 
   const doctorDocs = new Map();
@@ -266,7 +258,7 @@ async function main() {
     throw new Error("Missing doctor or patient seed records");
   }
 
-  await Appointments.deleteMany({ qrHash: /^seed-/ });
+  await Appointments.deleteMany({ qrHash: /^seed-demo-/ });
 
   const demoAppointments = [
     {
@@ -276,53 +268,39 @@ async function main() {
       slotStart: "09:00",
       slotEnd: "09:15",
       status: "Done",
-      qrHash: "seed-sofia-anna-done",
+      qrHash: "seed-demo-sofia-ana-done",
       tokenNumber: 1,
       isSkipped: false,
       checkedIn: true
     },
     {
-      doctorId: mateoDoctor._id,
-      patientId: luis._id,
-      date: inDays(7),
-      slotStart: "10:20",
-      slotEnd: "10:40",
-      status: "Booked",
-      qrHash: "seed-mateo-luis-booked",
-      tokenNumber: 2,
-      isSkipped: false,
-      checkedIn: false
-    },
-    {
       doctorId: sofiaDoctor._id,
-      patientId: ana._id,
+      patientId: luis._id,
       date: today,
-      slotStart: "09:30",
-      slotEnd: "09:45",
+      slotStart: "09:15",
+      slotEnd: "09:30",
       status: "Pending",
-      qrHash: "seed-sofia-ana-pending",
-      tokenNumber: 3,
+      qrHash: "seed-demo-sofia-luis-pending",
+      tokenNumber: 2,
       isSkipped: false,
       checkedIn: true
     },
     {
-      doctorId: sofiaDoctor._id,
+      doctorId: mateoDoctor._id,
       patientId: ana._id,
-      date: inDays(7),
+      date: inDays(1),
       slotStart: "10:00",
-      slotEnd: "10:15",
+      slotEnd: "10:20",
       status: "Booked",
-      qrHash: "seed-sofia-ana-future",
+      qrHash: "seed-demo-mateo-ana-booked",
       tokenNumber: null,
       isSkipped: false,
       checkedIn: false
     }
   ];
 
-  const appointmentDocs = [];
   for (const appointment of demoAppointments) {
-    const doc = await upsertAppointment(appointment);
-    appointmentDocs.push(doc);
+    await upsertAppointment(appointment);
   }
 
   const cachePatterns = [
@@ -333,7 +311,9 @@ async function main() {
     "dashboard:*",
     "appointmentHistory:*",
     "appointment:*",
-    "queue:*"
+    "queue:*",
+    "user:*",
+    "userRegistration:*"
   ];
 
   for (const pattern of cachePatterns) {
@@ -348,7 +328,7 @@ async function main() {
     users: userDocs.size,
     departments: departmentDocs.size,
     doctors: doctorDocs.size,
-    appointments: appointmentDocs.length,
+    appointments: demoAppointments.length,
     demoPassword: DEMO_PASSWORD
   });
 
