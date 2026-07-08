@@ -258,10 +258,11 @@ async function main() {
   }
 
   const sofiaDoctor = doctorDocs.get("Dr. Sofia Rivera");
+  const mateoDoctor = doctorDocs.get("Dr. Mateo Alvarez");
   const ana = userDocs.get("ana.torres@clinicflow.local");
   const luis = userDocs.get("luis.gomez@clinicflow.local");
 
-  if (!sofiaDoctor || !ana || !luis) {
+  if (!sofiaDoctor || !mateoDoctor || !ana || !luis) {
     throw new Error("Missing doctor or patient seed records");
   }
 
@@ -281,16 +282,16 @@ async function main() {
       checkedIn: true
     },
     {
-      doctorId: sofiaDoctor._id,
+      doctorId: mateoDoctor._id,
       patientId: luis._id,
-      date: today,
-      slotStart: "09:15",
-      slotEnd: "09:30",
-      status: "Pending",
-      qrHash: "seed-sofia-luis-pending",
+      date: inDays(7),
+      slotStart: "10:20",
+      slotEnd: "10:40",
+      status: "Booked",
+      qrHash: "seed-mateo-luis-booked",
       tokenNumber: 2,
       isSkipped: false,
-      checkedIn: true
+      checkedIn: false
     },
     {
       doctorId: sofiaDoctor._id,
